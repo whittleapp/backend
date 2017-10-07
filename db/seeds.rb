@@ -1,4 +1,6 @@
 User.delete_all
+Account.delete_all
+Transaction.delete_all 
 
 user_data = {
   name: "Ransom",
@@ -10,7 +12,11 @@ unless new_user.save
   puts "NAHHHHHHHHH"
 end
 
-new_user.create_accounts 
+new_user.create_accounts
+
+new_user.accounts.each do |account|
+  Transaction.create(posted_amount: 20.00, posted_date: Date.today, account_id: account.id)
+end 
 
 
 
