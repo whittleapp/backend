@@ -1,3 +1,5 @@
+User.delete_all
+
 user_data = {
   name: "Ransom",
   participant_id: "908997180284469041"
@@ -7,6 +9,8 @@ new_user = User.new(user_data)
 unless new_user.save 
   puts "NAHHHHHHHHH"
 end
+
+new_user.create_accounts 
 
 
 
