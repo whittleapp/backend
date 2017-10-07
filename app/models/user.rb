@@ -10,14 +10,17 @@ class User < ApplicationRecord
     response = HTTParty.post('http://api119525live.gateway.akana.com:80/user/accounts',
       :body => {LegalParticipantIdentifier: self.participant_id}.to_json,
       :headers =>{'Content-Type' => 'application/json', 'Accept' => 'application/json'})
-    
+
     response["AccessibleAccountDetailList"].each do |account_data|
-      Account.create({
-        operating_company_identifier: account_data["OperatingCompanyIdentifier"],
-        product_code: account_data["ProductCode"],
-        primary_identifier: account_data["PrimaryIdentifier"],
-        user_id: self.id 
-        })
+      valid_account_types = ['BCD', 'CCD']
+      if valid_account_types.include?(account_data['ProductCode'])
+        Account.create({
+          operating_company_identifier: account_data["OperatingCompanyIdentifier"],
+          product_code: account_data["ProductCode"],
+          primary_identifier: account_data["PrimaryIdentifier"],
+          user_id: self.id 
+          })
+      end
     end
   end
 end

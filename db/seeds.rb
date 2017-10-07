@@ -14,9 +14,11 @@ end
 
 new_user.create_accounts
 
-new_user.accounts.each do |account|
-  Transaction.create(posted_amount: 20.00, posted_date: Date.today, account_id: account.id)
-end 
+# new_user.accounts.each do |account|
+#   account.create_transactions
+# end 
+
+new_user.accounts.first.create_transactions
 
 
 
