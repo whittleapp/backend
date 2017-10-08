@@ -8,7 +8,7 @@ class Business < ApplicationRecord
     self.monthly_transactions(date).each do |transaction|
       sum += transaction.posted_amount
     end
-    sum
+    sum.round(2)
   end
 
   def monthly_transactions(date)
