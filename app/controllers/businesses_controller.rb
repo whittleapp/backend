@@ -19,7 +19,7 @@ class BusinessesController < ApplicationController
     render json: {
       summary: summary,
       date: $date, 
-      last_months_savings: 0
+      last_months_savings: calculate_whittle_savings
     }
   end
 
@@ -31,6 +31,19 @@ class BusinessesController < ApplicationController
     if params[:whittle] 
       business.update(whittle: params[:whittle], whittle_target: business.monthly_total($date))
     end
+  end
+
+  def calculate_whittle_savings
+    businesses = Business.all
+    savings = 0
+
+    businesses.each do |business|
+      if business.whittle && !business.ignore
+        savings += [0, business.whittle_target - business.monthly_total($date)].max
+      end
+    end
+
+    savings.round(2)
   end
 
 end
