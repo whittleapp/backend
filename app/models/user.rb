@@ -2,7 +2,7 @@ require 'httparty'
 
 class User < ApplicationRecord
   has_many :accounts
-
+  
   def create_accounts
     # call api to get account info
 
