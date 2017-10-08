@@ -6,7 +6,7 @@ class BusinessesController < ActionController::API
     businesses.each do |business|
       if business.monthly_transactions(date).count > 0
         summary << {
-          id: business.id
+          id: business.id,
           business: business.name,
           transactions: business.monthly_transactions(date).count,
           total_spent: business.monthly_total(date)
@@ -19,7 +19,7 @@ class BusinessesController < ActionController::API
   end
 
   def update
-    business = Business.find_by(name: params[:name])
+    business = Business.find(params[:id])
     if params[:ignore] 
       business.update(ignore: params[:ignore])
     end
