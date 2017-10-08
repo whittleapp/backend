@@ -11,7 +11,7 @@ Transaction.delete_all
 
 user_data = {
   name: "Ransom",
-  participant_id: "913995730031830909"
+  participant_id: "000996202016520455"
 }
 
 new_user = User.new(user_data)
