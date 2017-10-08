@@ -1,5 +1,6 @@
 User.delete_all
 Account.delete_all
+Business.delete_all
 Transaction.delete_all 
 
 user_data = {
@@ -14,11 +15,11 @@ end
 
 new_user.create_accounts
 
-# new_user.accounts.each do |account|
-#   account.create_transactions
-# end 
+new_user.accounts.each do |account|
+  account.create_transactions
+end 
 
-new_user.accounts.first.create_transactions
+# new_user.accounts.first.create_transactions
 
 
 

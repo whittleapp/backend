@@ -12,7 +12,7 @@ class User < ApplicationRecord
       :headers =>{'Content-Type' => 'application/json', 'Accept' => 'application/json'})
 
     response["AccessibleAccountDetailList"].each do |account_data|
-      valid_account_types = ['BCD', 'CCD']
+      valid_account_types = ['BCD', 'CCD', 'DDA']
       if valid_account_types.include?(account_data['ProductCode'])
         Account.create({
           operating_company_identifier: account_data["OperatingCompanyIdentifier"],
