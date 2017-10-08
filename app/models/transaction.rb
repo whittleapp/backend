@@ -7,4 +7,8 @@ class Transaction < ApplicationRecord
   def initialize(args)
     super
   end
+
+  def month
+    self.posted_date.month
+  end
 end
