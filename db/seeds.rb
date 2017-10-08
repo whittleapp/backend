@@ -3,9 +3,15 @@ Account.delete_all
 Business.delete_all
 Transaction.delete_all 
 
+  # "908997180284469041",
+  # "000996202016520455",
+  # "913996201744144603",
+  # "913995730031830909",
+  #  "000995928731567433"
+
 user_data = {
   name: "Ransom",
-  participant_id: "908997180284469041"
+  participant_id: "913995730031830909"
 }
 
 new_user = User.new(user_data)
