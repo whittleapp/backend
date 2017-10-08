@@ -1,15 +1,16 @@
 class BusinessesController < ActionController::API
+  DATE = Date.new(2016, 9, 12) 
+
   def index
     businesses = Business.all 
-    date = Date.new(2016, 9, 12) 
     summary = []
     businesses.each do |business|
-      if business.monthly_transactions(date).count > 0
+      if business.monthly_transactions(DATE).count > 0
         summary << {
           id: business.id,
           business: business.name,
-          transactions: business.monthly_transactions(date).count,
-          total_spent: business.monthly_total(date)
+          transactions: business.monthly_transactions(DATE).count,
+          total_spent: business.monthly_total(DATE)
        }
      end
     end
@@ -23,7 +24,9 @@ class BusinessesController < ActionController::API
     if params[:ignore] 
       business.update(ignore: params[:ignore])
     end
-
+    if params[:whittle] 
+      business.update(whittle: params[:whittle], whittle_target: business.monthly_total(DATE))
+    end
   end
 
 end
