@@ -23,4 +23,12 @@ class User < ApplicationRecord
       end
     end
   end
+
+  def transfer_whittle_savings
+    if @last_savings_transfer != nil && @last_savings_transfer.month == $date.month
+      p "not yet time to transfer again"
+    else
+      p "transferring whittle savings"
+    end
+  end
 end

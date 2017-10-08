@@ -3,8 +3,6 @@ Account.delete_all
 Business.delete_all
 Transaction.delete_all 
 
-$date = Date.new(2016, 9, 14)
-
 # "908997180284469041",
 # "000996202016520455",
 # "913996201744144603",
