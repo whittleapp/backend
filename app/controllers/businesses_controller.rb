@@ -10,7 +10,10 @@ class BusinessesController < ActionController::API
           id: business.id,
           business: business.name,
           transactions: business.monthly_transactions(DATE).count,
-          total_spent: business.monthly_total(DATE)
+          total_spent: business.monthly_total(DATE),
+          ignore: business.ignore,
+          whittle: business.whittle,
+          whittle_target: business.whittle_target
        }
      end
     end
@@ -21,7 +24,7 @@ class BusinessesController < ActionController::API
 
   def update
     business = Business.find(params[:id])
-    if params[:ignore] 
+    if params[:ignore]
       business.update(ignore: params[:ignore])
     end
     if params[:whittle] 
