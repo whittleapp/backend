@@ -12,7 +12,7 @@ class BusinessesController < ApplicationController
           total_spent: business.monthly_total($date),
           ignore: business.ignore,
           whittle: business.whittle,
-          whittle_target: business.whittle_target,
+          whittle_target: business.whittle_target
        }
      end
     end
