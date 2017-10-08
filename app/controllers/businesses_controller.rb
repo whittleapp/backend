@@ -1,7 +1,7 @@
 class BusinessesController < ApplicationController
 
   def index
-    businesses = Business.all 
+    businesses = Business.all
     summary = []
     businesses.each do |business|
       if business.monthly_transactions($date).count > 0
@@ -18,17 +18,17 @@ class BusinessesController < ApplicationController
     end
     render json: {
       summary: summary,
-      date: $date, 
+      date: $date,
       last_months_savings: calculate_whittle_savings
     }
   end
 
   def update
     business = Business.find(params[:id])
-    if params[:ignore]
+    if params[:ignore] || params[:snooze]
       business.update(ignore: params[:ignore])
     end
-    if params[:whittle] 
+    if params[:whittle]
       business.update(whittle: params[:whittle], whittle_target: business.monthly_total($date))
     end
   end
