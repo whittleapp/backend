@@ -4,22 +4,14 @@ class User < ApplicationRecord
   has_many :accounts
   
   def create_accounts
-    # call api to get account info
-
-    # create an account for each of them
-    response = HTTParty.post('http://api119525live.gateway.akana.com:80/user/accounts',
-      :body => {LegalParticipantIdentifier: self.participant_id}.to_json,
-      :headers =>{'Content-Type' => 'application/json', 'Accept' => 'application/json'})
-
-    response["AccessibleAccountDetailList"].each do |account_data|
+    # create an account for each of users accounts in their information
+    account_details = get_account_details
+    # checks for valid account types (certain off limits for hackathon test data)
+    account_details.each do |account_data|
       valid_account_types = ['BCD', 'CCD', 'DDA']
       if valid_account_types.include?(account_data['ProductCode'])
-        Account.create({
-          operating_company_identifier: account_data["OperatingCompanyIdentifier"],
-          product_code: account_data["ProductCode"],
-          primary_identifier: account_data["PrimaryIdentifier"],
-          user_id: self.id 
-          })
+        # private method handles actualy creation
+        create_single_account(account_data)
       end
     end
   end
@@ -32,3 +24,31 @@ class User < ApplicationRecord
     end
   end
 end
+
+
+private 
+
+  def get_user_data
+    # call api to get account info
+    HTTParty.post('http://api119525live.gateway.akana.com:80/user/accounts',
+      :body => {LegalParticipantIdentifier: self.participant_id}.to_json,
+      :headers =>{'Content-Type' => 'application/json', 'Accept' => 'application/json'})
+  end
+
+  def get_account_details
+    # calls private get_user_data method to get api response data and desired parsed data
+    response = get_user_data 
+    response["AccessibleAccountDetailList"] 
+  end
+
+  def create_single_account(account_data) 
+    # single account creation
+    Account.create({
+          operating_company_identifier: account_data["OperatingCompanyIdentifier"],
+          product_code: account_data["ProductCode"],
+          primary_identifier: account_data["PrimaryIdentifier"],
+          user_id: self.id 
+          })
+  end
+
+
