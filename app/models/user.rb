@@ -6,11 +6,11 @@ class User < ApplicationRecord
   def create_accounts
     # create an account for each of users accounts in their information
     account_details = get_account_details
-    # checks for valid account types (certain off limits for hackathon test data)
+    # checks for valid account types (certain account types off limits for hackathon test data)
+    valid_account_types = ['BCD', 'CCD', 'DDA']
     account_details.each do |account_data|
-      valid_account_types = ['BCD', 'CCD', 'DDA']
       if valid_account_types.include?(account_data['ProductCode'])
-        # private method handles actualy creation
+        # private method handles actual creation
         create_single_account(account_data)
       end
     end
@@ -32,7 +32,7 @@ private
     # call api to get account info
     HTTParty.post('http://api119525live.gateway.akana.com:80/user/accounts',
       :body => {LegalParticipantIdentifier: self.participant_id}.to_json,
-      :headers =>{'Content-Type' => 'application/json', 'Accept' => 'application/json'})
+      :headers => {'Content-Type' => 'application/json', 'Accept' => 'application/json'})
   end
 
   def get_account_details
